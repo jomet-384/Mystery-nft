@@ -1,0 +1,36 @@
+{
+  "name": "mystery-nft-fhevm",
+  "version": "1.0.0",
+  "description": "Mystery Box NFT with encrypted rarity using FHEVM",
+  "private": true,
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "deploy:local": "hardhat run scripts/deploy.js --network localhost",
+    "deploy:sepolia": "hardhat run scripts/deploy.js --network sepolia",
+    "node": "hardhat node",
+    "dev": "cd frontend && npm run dev"
+  },
+  "keywords": ["fhevm", "nft", "encryption", "mystery-box"],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "@nomicfoundation/hardhat-verify": "^2.0.0",
+    "@typechain/ethers-v6": "^0.5.1",
+    "@typechain/hardhat": "^9.1.0",
+    "hardhat": "^2.26.0",
+    "hardhat-deploy": "^0.11.45",
+    "typechain": "^8.3.2",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "@fhevm/hardhat-plugin": "^0.3.0-1",
+    "@fhevm/solidity": "^0.9.1",
+    "@openzeppelin/contracts": "^5.0.0",
+    "@zama-fhe/oracle-solidity": "^0.1.0",
+    "@zama-fhe/relayer-sdk": "^0.3.0-5",
+    "dotenv": "^16.0.0",
+    "ethers": "^6.15.0"
+  }
+}

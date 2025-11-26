@@ -1,0 +1,48 @@
+# Dependencies
+node_modules/
+frontend/node_modules/
+
+# Environment
+.env
+.env.local
+
+# Build artifacts
+artifacts/
+cache/
+typechain-types/
+dist/
+build/
+
+# Hardhat
+coverage/
+coverage.json
+fhevmTemp/
+
+# Frontend
+frontend/dist/
+frontend/.vite/
+
+# Deployments (comment out if you want to commit)
+deployments/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Testing
+.coverage_cache/
+.coverage_contracts/
