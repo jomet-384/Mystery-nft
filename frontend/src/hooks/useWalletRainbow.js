@@ -8,28 +8,32 @@ export function useWalletRainbow() {
   const { connect, connectors } = useConnect();
   const { disconnect } = useDisconnect();
   const [signer, setSigner] = useState(null);
+  const [provider, setProvider] = useState(null);
 
-  // Get ethers signer when connected
+  // Get ethers provider and signer when connected
   useEffect(() => {
-    async function getSigner() {
+    async function getProviderAndSigner() {
       if (isConnected && connector && window.ethereum) {
         try {
-          const provider = new ethers.BrowserProvider(window.ethereum);
-          const ethSigner = await provider.getSigner();
+          const ethProvider = new ethers.BrowserProvider(window.ethereum);
+          const ethSigner = await ethProvider.getSigner();
+          setProvider(ethProvider);
           setSigner(ethSigner);
-          console.log('✅ Signer ready:', address);
+          console.log('✅ Provider and signer ready:', address);
         } catch (error) {
-          console.error('Failed to get signer:', error);
+          console.error('Failed to get provider/signer:', error);
         }
       } else {
+        setProvider(null);
         setSigner(null);
       }
     }
-    getSigner();
+    getProviderAndSigner();
   }, [isConnected, connector, address]);
 
   return {
     address,
+    provider,
     signer,
     isConnected,
     connect: () => {

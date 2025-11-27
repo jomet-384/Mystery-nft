@@ -2,12 +2,17 @@
 let fhevmInstance = null;
 
 /**
- * Initialize FHEVM instance for browser (using CDN)
+ * Initialize FHEVM instance after wallet connection
+ * @param {Object} provider - Ethers provider from connected wallet
  * @returns {Promise<Object>} FHEVM instance
  */
-export async function initializeFhevm() {
+export async function initializeFhevm(provider) {
   if (fhevmInstance) {
     return fhevmInstance;
+  }
+
+  if (!provider) {
+    throw new Error('Provider is required. Connect wallet first.');
   }
 
   try {
@@ -21,18 +26,18 @@ export async function initializeFhevm() {
 
     const { initSDK, createInstance, SepoliaConfig } = sdk;
 
-    // Initialize SDK
+    // Initialize SDK first
     await initSDK();
     console.log('✅ FHEVM SDK initialized');
 
-    // Create instance with Sepolia config
+    // Create instance with provider from connected wallet
     const config = {
       ...SepoliaConfig,
-      network: window.ethereum
+      network: provider  // Use the provider from connected wallet
     };
 
     fhevmInstance = await createInstance(config);
-    console.log('✅ FHEVM instance created');
+    console.log('✅ FHEVM instance created with connected wallet');
 
     return fhevmInstance;
   } catch (error) {
@@ -47,6 +52,14 @@ export async function initializeFhevm() {
  */
 export function getFhevmInstance() {
   return fhevmInstance;
+}
+
+/**
+ * Reset FHEVM instance (call when wallet disconnects)
+ */
+export function resetFhevmInstance() {
+  fhevmInstance = null;
+  console.log('🔄 FHEVM instance reset');
 }
 
 /**
