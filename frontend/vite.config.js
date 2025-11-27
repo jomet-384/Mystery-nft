@@ -10,6 +10,11 @@ export default defineConfig({
     }
   },
   server: {
-    port: 3000
+    port: 3000,
+    headers: {
+      // Required for fhEVM SDK to support SharedArrayBuffer and threads
+      'Cross-Origin-Opener-Policy': 'same-origin',
+      'Cross-Origin-Embedder-Policy': 'require-corp'
+    }
   }
 })

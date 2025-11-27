@@ -3,7 +3,7 @@ let fhevmInstance = null;
 
 /**
  * Initialize FHEVM instance after wallet connection
- * @param {Object} provider - Ethers provider from connected wallet
+ * @param {Object} provider - Ethers provider from connected wallet (not used directly, we use window.ethereum)
  * @returns {Promise<Object>} FHEVM instance
  */
 export async function initializeFhevm(provider) {
@@ -13,6 +13,11 @@ export async function initializeFhevm(provider) {
 
   if (!provider) {
     throw new Error('Provider is required. Connect wallet first.');
+  }
+
+  // Verify window.ethereum is available
+  if (!window.ethereum) {
+    throw new Error('window.ethereum not available. Please install MetaMask.');
   }
 
   try {
@@ -30,10 +35,11 @@ export async function initializeFhevm(provider) {
     await initSDK();
     console.log('✅ FHEVM SDK initialized');
 
-    // Create instance with provider from connected wallet
+    // Create instance with window.ethereum (EIP-1193 provider)
+    // The SDK expects the raw window.ethereum object, not an ethers provider
     const config = {
       ...SepoliaConfig,
-      network: provider  // Use the provider from connected wallet
+      network: window.ethereum  // Must be EIP-1193 provider (window.ethereum)
     };
 
     fhevmInstance = await createInstance(config);
